@@ -75,21 +75,39 @@
 
 -- 12)**Listar todos os clientes, incluindo os que não fizeram pedidos, e os livros associados a cada pedido, se houver.
 		select c.nome, l.titulo
-a) Utilize LEFT JOIN entre as tabelas clientes, pedidos e livros.
+-- 12)**Listar todos os clientes, incluindo os que não fizeram pedidos, e os livros associados a cada pedido, se houver.
+		select c.nome, l.titulo;
 
-13)**Listar todos os autores que têm livros associados a pedidos feitos em uma
-determinada data.
-a) Utilize INNER JOIN entre as tabelas autores, livros e pedidos com uma
-condição de data de pedido.
 
-14)**Listar todos os pedidos feitos por clientes com nomes que começam com a letra "A",
-incluindo os detalhes do livro.
-a) Utilize INNER JOIN entre as tabelas clientes e pedidos, e outra INNER JOIN entre
-as tabelas pedidos e livros, com uma condição no nome do cliente.
+-- 13)**Listar todos os autores que têm livros associados a pedidos feitos em uma determinada data.
+	select a.nome from autores a
+    
+    INNER JOIN livros l
+    ON l.autor_id  = a.autor_id
+    
+	inner join pedidos p
+    ON p.livro_id = l.livro_id
+    
+    WHERE  p.data_pedido > 2020;
 
-15)**Listar todos os livros que não foram pedidos até o momento.
-a) Utilize LEFT JOIN entre as tabelas livros e pedidos, e filtre os registros onde não
-há pedidos associados.
+-- 14)**Listar todos os pedidos feitos por clientes com nomes que começam com a letra "A", incluindo os detalhes do livro.
+		select c.nome, l.titulo, p.quantidade from clientes c
+        
+        INNER JOIN pedidos p
+        ON p.cliente_id = c.cliente_id
+        
+        inner join livros l
+        ON l.livro_id = p.livro_id
+        
+        WHERE c.nome LIKE 'a%';
+        
+-- 15)**Listar todos os livros que não foram pedidos até o momento.
+	select l.titulo from livros l
+    
+    LEFT JOIN pedidos p
+    ON p.livro_id = l.livro_id
+    
+    not in (select p.livro_id from pedidos);
 
 16)**Listar todos os pedidos feitos por clientes, incluindo os detalhes do livro, ordenados
 por data de pedido.
