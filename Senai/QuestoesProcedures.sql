@@ -36,9 +36,8 @@ end;
 DELIMITER //
 create procedure update_carteira(id_prop int)
 begin
-	set @id_car = (select id from veiculos where proprietario_id = @id_prop);
-    set @points = (select sum(pontos) from multas where infracao_id in (select id from infracoes where veiculo_id = @id_car));
-    update propietarios set  pontos_cartreira = @points where id = @id_prop;
+    set @points = (select sum(pontos) from multas where infracao_id in (select id from infracoes where veiculo_id IN (select id from veiculos where proprietario_id = id_pro)));
+    update propietarios set  pontos_cartreira = @points where id = id_prop;
 end;
 // DELIMITER ;
 
